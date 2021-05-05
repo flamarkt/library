@@ -1,0 +1,46 @@
+{
+    "name": "flamarkt/library",
+    "description": "Images and files for Flamarkt.",
+    "keywords": [
+        "flarum",
+        "flamarkt",
+        "marketplace",
+        "ecommerce",
+        "files",
+        "upload"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^0.1.0-beta.16",
+        "flamarkt/core": "^0.1.0",
+        "intervention/image": "^2.5",
+        "ramsey/uuid": "^4.1"
+    },
+    "authors": [
+        {
+            "name": "Flamarkt",
+            "homepage": "https://flamarkt.org/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/clarkwinkelmann/flamarkt/library/issues",
+        "source": "https://github.com/clarkwinkelmann/flamarkt/library"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flamarkt\\Library\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Library",
+            "category": "flamarkt",
+            "icon": {
+                "name": "fas fa-file",
+                "backgroundColor": "#684ba6",
+                "color": "#fff"
+            }
+        }
+    }
+}
