@@ -7,8 +7,8 @@ export default class FileList extends AbstractList {
     head() {
         const columns = super.head();
 
-        columns.add('thumbnail', m('th', 'Thumbnail'));//TODO
-        columns.add('title', m('th', 'Title'));//TODO
+        columns.add('thumbnail', m('th', app.translator.trans('flamarkt-library.backoffice.files.head.thumbnail')), 20);
+        columns.add('title', m('th', app.translator.trans('flamarkt-library.backoffice.files.head.title')), 10);
 
         return columns;
     }
@@ -18,9 +18,9 @@ export default class FileList extends AbstractList {
 
         columns.add('thumbnail', m('td', m('img', {
             src: file.conversionUrl('150x150'),
-            alt: 'Thumbnail',
-        })));
-        columns.add('title', m('td', file.title()));
+            alt: file.title(),
+        })), 20);
+        columns.add('title', m('td', file.title()), 10);
 
         return columns;
     }

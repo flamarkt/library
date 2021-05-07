@@ -8,13 +8,15 @@ export default class FileIndexPage extends Page {
     state!: FileListState;
     uploading: boolean = false;
 
-    oninit() {
+    oninit(vnode) {
+        super.oninit(vnode);
+
         this.state = new FileListState();
         this.state.refresh();
     }
 
     view() {
-        return m('.ProductIndexPage', [
+        return m('.FileIndexPage', m('.container', [
             m('input', {
                 type: 'file',
                 onchange: event => {
@@ -44,6 +46,6 @@ export default class FileIndexPage extends Page {
             m(FileList, {
                 state: this.state,
             }),
-        ]);
+        ]));
     }
 }

@@ -1,6 +1,6 @@
 import AbstractShowPage from 'flamarkt/core/common/pages/AbstractShowPage';
+import SubmitButton from 'flamarkt/core/backoffice/components/SubmitButton';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
-import Button from 'flarum/common/components/Button';
 import File from '../../common/models/File';
 
 export default class FileShowPage extends AbstractShowPage {
@@ -32,7 +32,7 @@ export default class FileShowPage extends AbstractShowPage {
             onsubmit: this.onsubmit.bind(this),
         }, m('.container', [
             m('.Form-group', [
-                m('label', 'Title'),
+                m('label', app.translator.trans('flamarkt-library.backoffice.files.field.title')),
                 m('input.FormControl', {
                     type: 'text',
                     value: this.title,
@@ -43,7 +43,7 @@ export default class FileShowPage extends AbstractShowPage {
                 }),
             ]),
             m('.Form-group', [
-                m('label', 'Description'),
+                m('label', app.translator.trans('flamarkt-library.backoffice.files.field.description')),
                 m('textarea.FormControl', {
                     value: this.description,
                     oninput: event => {
@@ -53,12 +53,11 @@ export default class FileShowPage extends AbstractShowPage {
                 }),
             ]),
             m('.Form-group', [
-                Button.component({
-                    type: 'submit',
-                    className: 'Button Button--primary',
+                SubmitButton.component({
                     loading: this.saving,
-                    disabled: !this.dirty,
-                }, 'Save'),
+                    dirty: this.dirty,
+                    exists: this.file.exists,
+                }),
             ]),
         ]));
     }
@@ -75,6 +74,7 @@ export default class FileShowPage extends AbstractShowPage {
 
         this.saving = true;
 
+        // @ts-ignore
         this.file.save(this.data()).then(file => {
             this.file = file;
 

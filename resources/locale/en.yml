@@ -1,4 +1,17 @@
 flamarkt-library:
+    backoffice:
+        nav:
+            files: Library
+        products:
+            head:
+                thumbnail: Thumbnail
+        files:
+            head:
+                thumbnail: Thumbnail
+                title: Title
+            field:
+                title: Title
+                description: Description
     forum:
         settings:
             submit: Save

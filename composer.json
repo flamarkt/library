@@ -41,6 +41,10 @@
                 "backgroundColor": "#684ba6",
                 "color": "#fff"
             }
+        },
+        "flamarkt-backoffice": {
+            "showInBackoffice": true,
+            "hideFromAdmin": true
         }
     }
 }
