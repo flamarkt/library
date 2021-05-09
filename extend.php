@@ -2,6 +2,7 @@
 
 namespace Flamarkt\Library;
 
+use Flamarkt\Core\Api\Controller as CoreController;
 use Flamarkt\Core\Api\Serializer\BasicProductSerializer;
 use Flamarkt\Core\Api\Serializer\ProductSerializer;
 use Flamarkt\Core\Product\Event\Saving;
@@ -30,7 +31,7 @@ return [
 
     (new Extend\Model(Product::class))
         ->belongsToMany('files', File::class, 'flamarkt_file_product')
-        ->hasOne('thumbnail', File::class, 'flamarkt_file_product'),//TODO
+        ->belongsTo('thumbnail', File::class, 'thumbnail_id'),
 
     (new Extend\Event())
         ->listen(Saving::class, Listeners\SaveProduct::class),
@@ -42,6 +43,15 @@ return [
         ->attributes(ProductAttributes::class)
         ->hasMany('files', Api\Serializer\FileSerializer::class),
 
+    (new Extend\ApiController(CoreController\ProductIndexController::class))
+        ->addInclude('thumbnail'),
+    (new Extend\ApiController(CoreController\ProductShowController::class))
+        ->addInclude('thumbnail'),
+    (new Extend\ApiController(CoreController\ProductStoreController::class))
+        ->addInclude('thumbnail'),
+    (new Extend\ApiController(CoreController\ProductUpdateController::class))
+        ->addInclude('thumbnail'),
+
     /*(new Extend\Filter(ProductFilterer::class))
         ->addFilter(Gambit\ProductCategoryGambit::class),
     (new Extend\SimpleFlarumSearch(ProductSearcher::class))
@@ -52,4 +62,10 @@ return [
 
     (new Extend\Console())
         ->command(Console\RefreshConversions::class),
+
+    (new Extend\ModelVisibility(File::class))
+        ->scope(Scope\View::class),
+
+    (new Extend\Filter(FileFilterer::class))
+        ->addFilter(Filter\MimeFilter::class),
 ];

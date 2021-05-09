@@ -9,7 +9,6 @@ return [
             $table->unsignedInteger('file_id');
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('order')->nullable();
-            $table->boolean('is_thumbnail')->default(false);
             $table->timestamps();
 
             $table->foreign('file_id')->references('id')->on('flamarkt_files')->onDelete('cascade');

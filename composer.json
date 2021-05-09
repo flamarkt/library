@@ -24,8 +24,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/clarkwinkelmann/flamarkt/library/issues",
-        "source": "https://github.com/clarkwinkelmann/flamarkt/library"
+        "issues": "https://github.com/flamarkt/library/issues",
+        "source": "https://github.com/flamarkt/library"
     },
     "autoload": {
         "psr-4": {
@@ -38,7 +38,7 @@
             "category": "flamarkt",
             "icon": {
                 "name": "fas fa-file",
-                "backgroundColor": "#684ba6",
+                "backgroundColor": "#266a13",
                 "color": "#fff"
             }
         },

@@ -43,13 +43,17 @@ class ConversionRepository
 
         foreach (resolve('flamarkt.library.conversions') as $name => $callback) {
             /**
-             * @var Image $encoded
+             * @var Image|null $conversion
              */
-            $encoded = $callback(clone $image)->encode('jpg');
+            $conversion = $callback(clone $image);
 
-            $this->assets->put($this->createPath($file, $name . '.jpg'), $encoded);
+            if ($conversion) {
+                $encoded = $conversion->encode('jpg');
 
-            $conversionInfo[] = $name;
+                $this->assets->put($this->createPath($file, $name . '.jpg'), $encoded);
+
+                $conversionInfo[] = $name;
+            }
         }
 
         $file->conversions = $conversionInfo;

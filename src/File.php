@@ -5,10 +5,10 @@ namespace Flamarkt\Library;
 use Carbon\Carbon;
 use Flamarkt\Core\Product\Product;
 use Flarum\Database\AbstractModel;
+use Flarum\Database\ScopeVisibilityTrait;
 use Flarum\User\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations;
-use Illuminate\Support\Arr;
 
 /**
  * @property int $id
@@ -31,7 +31,17 @@ use Illuminate\Support\Arr;
  */
 class File extends AbstractModel
 {
+    use ScopeVisibilityTrait;
+
     protected $table = 'flamarkt_files';
+
+    public $timestamps = true;
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'hidden_at' => 'datetime',
+    ];
 
     public function user(): Relations\BelongsTo
     {

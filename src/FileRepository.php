@@ -57,7 +57,8 @@ class FileRepository
 
             $this->queue->push(new CreateConversions($file));
 
-            return $file;
+            // Get the latest values in case the conversions were created in a sync job
+            return File::query()->findOrFail($file->id);
         } finally {
             @unlink($tmpFile);
         }
