@@ -5,7 +5,7 @@ namespace Flamarkt\Library\Api\Controller;
 use Flamarkt\Library\Api\Serializer\FileSerializer;
 use Flamarkt\Library\FileRepository;
 use Flarum\Api\Controller\AbstractCreateController;
-use Flarum\User\User;
+use Flarum\Http\RequestUtil;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -29,10 +29,7 @@ class FileStoreController extends AbstractCreateController
          */
         $uploadedFile = Arr::get($request->getUploadedFiles(), 'file');
 
-        /**
-         * @var User $actor
-         */
-        $actor = $request->getAttribute('actor');
+        $actor = RequestUtil::getActor($request);
 
         $actor->assertCan('backoffice');
 
