@@ -18,7 +18,8 @@ return [
         ->route('/files/{id:[0-9a-f-]+|new}', 'files.show'),
 
     (new Extend\Frontend('forum'))
-        ->js(__DIR__ . '/js/dist/forum.js'),
+        ->js(__DIR__ . '/js/dist/forum.js')
+        ->css(__DIR__ . '/resources/less/forum.less'),
 
     new Extend\Locales(__DIR__ . '/resources/locale'),
 

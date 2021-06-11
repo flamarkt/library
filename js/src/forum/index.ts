@@ -1,5 +1,6 @@
 import {extend} from 'flarum/common/extend';
 import Product from 'flamarkt/core/common/models/Product';
+import ProductListItem from 'flamarkt/core/forum/components/ProductListItem';
 import ProductShowLayout from 'flamarkt/core/forum/layouts/ProductShowLayout';
 import Model from 'flarum/common/Model';
 import File from '../common/models/File';
@@ -10,6 +11,15 @@ app.initializers.add('flamarkt-library', () => {
     app.store.models['flamarkt-files'] = File;
 
     Product.prototype.thumbnail = Model.hasOne('thumbnail');
+
+    extend(ProductListItem.prototype, 'items', function (items: ItemList) {
+        const file = this.attrs.product.thumbnail();
+
+        items.add('thumbnail', Image.component({
+            className: 'ProductListItem--thumbnail',
+            file,
+        }), 30);
+    });
 
     extend(ProductShowLayout.prototype, 'gallerySection', function (items: ItemList, product) {
         const file = product.thumbnail();
