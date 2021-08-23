@@ -52,6 +52,8 @@ return [
         ->addInclude('thumbnail'),
     (new Extend\ApiController(CoreController\ProductUpdateController::class))
         ->addInclude('thumbnail'),
+    (new Extend\ApiController(CoreController\OrderShowController::class))
+        ->addInclude('lines.product.thumbnail'),
 
     /*(new Extend\Filter(ProductFilterer::class))
         ->addFilter(Gambit\ProductCategoryGambit::class),

@@ -12,12 +12,12 @@ export default class Image extends Component<ImageAttrs> {
         const {file, size, className} = this.attrs;
 
         if (!file) {
-            return m('div', {
+            return m('span.FlamarktThumbnail', {
                 className,
             }, 'No image');
         }
 
-        return m('img', {
+        return m('img.FlamarktThumbnail', {
             src: file.conversionUrl(size || '150x150'),
             alt: file.title(),
             className,
