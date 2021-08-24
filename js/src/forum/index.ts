@@ -11,6 +11,13 @@ import Link from 'flarum/common/components/Link';
 import File from '../common/models/File';
 import ItemList from 'flarum/common/utils/ItemList';
 import Image from './components/Image';
+import {common} from '../common/compat';
+import {forum} from './compat';
+
+export {
+    common,
+    forum,
+}
 
 app.initializers.add('flamarkt-library', () => {
     app.store.models['flamarkt-files'] = File;

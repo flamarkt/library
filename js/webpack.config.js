@@ -3,6 +3,7 @@ const config = require('flarum-webpack-config')();
 config.entry = {
     backoffice: './backoffice.js',
     forum: './forum.js',
+    mithril2html: './mithril2html.js',
 };
 
 config.externals.push(function (context, request, callback) {

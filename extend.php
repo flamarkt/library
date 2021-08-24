@@ -2,6 +2,7 @@
 
 namespace Flamarkt\Library;
 
+use ClarkWinkelmann\Mithril2Html\Extend\FrontendNoConflict;
 use Flamarkt\Core\Api\Controller as CoreController;
 use Flamarkt\Core\Api\Serializer\BasicProductSerializer;
 use Flamarkt\Core\Api\Serializer\ProductSerializer;
@@ -20,6 +21,9 @@ return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__ . '/js/dist/forum.js')
         ->css(__DIR__ . '/resources/less/forum.less'),
+
+    (new FrontendNoConflict('mithril2html'))
+        ->js(__DIR__ . '/js/dist/mithril2html.js'),
 
     new Extend\Locales(__DIR__ . '/resources/locale'),
 
