@@ -13,6 +13,8 @@ return [
     },
     'down' => function (Builder $schema) {
         $schema->table('flamarkt_products', function (Blueprint $table) {
+            $table->dropForeign(['thumbnail_id']);
+
             $table->dropColumn('thumbnail_id');
         });
     },
