@@ -38,6 +38,7 @@ app.initializers.add('flamarkt-library', () => {
 
         items.add('thumbnail', Image.component({
             file,
+            size: 400,
         }));
     });
 
