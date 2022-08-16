@@ -1,12 +1,8 @@
-import Mithril from 'mithril';
+import ProductShowPage from 'flamarkt/core/backoffice/pages/ProductShowPage';
+import File from './src/common/models/File';
 
-declare global {
-    const m: Mithril.Static;
-}
-
-import ForumApplication from 'flarum/forum/ForumApplication';
-import AdminApplication from 'flarum/admin/AdminApplication';
-
-declare global {
-    const app: ForumApplication & AdminApplication;
+declare module 'flamarkt/core/backoffice/pages/ProductShowPage' {
+    export default interface ProductShowPage {
+        thumbnail: File | null
+    }
 }

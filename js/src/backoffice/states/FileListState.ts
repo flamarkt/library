@@ -1,6 +1,7 @@
-import AbstractListState from 'flamarkt/core/common/states/AbstractListState';
+import AbstractListState from 'flamarkt/backoffice/common/states/AbstractListState';
+import File from '../../common/models/File';
 
-export default class FileListState extends AbstractListState {
+export default class FileListState extends AbstractListState<File> {
     type() {
         return 'flamarkt/files';
     }

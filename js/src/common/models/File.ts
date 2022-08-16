@@ -1,11 +1,11 @@
 import Model from 'flarum/common/Model';
 
 export default class File extends Model {
-    conversions = Model.attribute('conversions');
-    title = Model.attribute('title');
-    description = Model.attribute('description');
+    conversions = Model.attribute<{ [key: string]: string }>('conversions');
+    title = Model.attribute<string>('title');
+    description = Model.attribute<string>('description');
 
-    conversionUrl(name) {
+    conversionUrl(name: string) {
         if (this.conversions()[name]) {
             return this.conversions()[name];
         }
@@ -15,6 +15,6 @@ export default class File extends Model {
     }
 
     apiEndpoint() {
-        return '/flamarkt/files' + (this.exists ? '/' + this.data.id : '');
+        return '/flamarkt/files' + (this.exists ? '/' + (this.data as any).id : '');
     }
 }

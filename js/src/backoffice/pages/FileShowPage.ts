@@ -1,5 +1,5 @@
-import AbstractShowPage from 'flamarkt/core/common/pages/AbstractShowPage';
-import SubmitButton from 'flamarkt/core/backoffice/components/SubmitButton';
+import AbstractShowPage from 'flamarkt/backoffice/common/pages/AbstractShowPage';
+import SubmitButton from 'flamarkt/backoffice/backoffice/components/SubmitButton';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import File from '../../common/models/File';
 
@@ -69,7 +69,7 @@ export default class FileShowPage extends AbstractShowPage {
         };
     }
 
-    onsubmit(event) {
+    onsubmit(event: Event) {
         event.preventDefault();
 
         this.saving = true;

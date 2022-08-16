@@ -1,8 +1,8 @@
 import File from '../common/models/File';
-import BackofficeNav from 'flamarkt/core/backoffice/components/BackofficeNav';
+import BackofficeNav from 'flamarkt/backoffice/backoffice/components/BackofficeNav';
+import ActiveLinkButton from 'flamarkt/backoffice/common/components/ActiveLinkButton';
 import ProductList from 'flamarkt/core/backoffice/components/ProductList';
 import ProductShowPage from 'flamarkt/core/backoffice/pages/ProductShowPage';
-import ActiveLinkButton from 'flamarkt/core/common/components/ActiveLinkButton';
 import Product from 'flamarkt/core/common/models/Product';
 import {extend} from 'flarum/common/extend';
 import Button from 'flarum/common/components/Button';
@@ -10,7 +10,6 @@ import FileIndexPage from './pages/FileIndexPage';
 import FileShowPage from './pages/FileShowPage';
 import FileSelectionModal from './components/FileSelectionModal';
 import Model from 'flarum/common/Model';
-import ItemList from 'flarum/common/utils/ItemList';
 
 app.initializers.add('flamarkt-library', () => {
     app.store.models['flamarkt-files'] = File;
@@ -36,11 +35,11 @@ app.initializers.add('flamarkt-library', () => {
         }, 'Library'));
     });
 
-    extend(ProductList.prototype, 'head', function (columns: ItemList) {
+    extend(ProductList.prototype, 'head', function (columns) {
         columns.add('thumbnail', m('th', 'Thumbnail'), 30);
     });
 
-    extend(ProductList.prototype, 'columns', function (columns: ItemList, product: Product) {
+    extend(ProductList.prototype, 'columns', function (columns, product) {
         const file = product.thumbnail();
 
         columns.add('thumbnail', m('td', file ? m('img', {
@@ -49,15 +48,15 @@ app.initializers.add('flamarkt-library', () => {
         }) : null), 30);
     });
 
-    extend(ProductShowPage.prototype, 'oninit', function (this: ProductShowPage) {
+    extend(ProductShowPage.prototype, 'oninit', function () {
         this.thumbnail = null;
     });
 
-    extend(ProductShowPage.prototype, 'show', function (this: ProductShowPage, returnValue, product: Product) {
+    extend(ProductShowPage.prototype, 'show', function (returnValue, product) {
         this.thumbnail = product.thumbnail() || null;
     });
 
-    extend(ProductShowPage.prototype, 'fields', function (this: ProductShowPage, fields: ItemList) {
+    extend(ProductShowPage.prototype, 'fields', function (fields) {
         fields.add('thumbnail', m('.Form-group', [
             m('label', 'Thumbnail'),
             this.thumbnail ? [
@@ -88,7 +87,7 @@ app.initializers.add('flamarkt-library', () => {
         ]));
     });
 
-    extend(ProductShowPage.prototype, 'data', function (this: ProductShowPage, data) {
+    extend(ProductShowPage.prototype, 'data', function (data) {
         data.relationships = data.relationships || {};
         data.relationships.thumbnail = this.thumbnail;
     });

@@ -9,7 +9,6 @@ import OrderTableRow from 'flamarkt/core/forum/components/OrderTableRow';
 import Model from 'flarum/common/Model';
 import Link from 'flarum/common/components/Link';
 import File from '../common/models/File';
-import ItemList from 'flarum/common/utils/ItemList';
 import Image from './components/Image';
 import {common} from '../common/compat';
 import {forum} from './compat';
@@ -24,7 +23,7 @@ app.initializers.add('flamarkt-library', () => {
 
     Product.prototype.thumbnail = Model.hasOne('thumbnail');
 
-    extend(ProductListItem.prototype, 'items', function (items: ItemList) {
+    extend(ProductListItem.prototype, 'items', function (items) {
         const file = this.attrs.product.thumbnail();
 
         items.add('thumbnail', Image.component({
@@ -33,7 +32,7 @@ app.initializers.add('flamarkt-library', () => {
         }), 30);
     });
 
-    extend(ProductShowLayout.prototype, 'gallerySection', function (items: ItemList, product) {
+    extend(ProductShowLayout.prototype, 'gallerySection', function (items, product) {
         const file = product.thumbnail();
 
         items.add('thumbnail', Image.component({
@@ -42,19 +41,19 @@ app.initializers.add('flamarkt-library', () => {
         }));
     });
 
-    extend(OrderTable.prototype, ['head', 'foot'], function (items: ItemList) {
+    extend(OrderTable.prototype, ['head', 'foot'], function (items) {
         items.add('thumbnail', m('th'), 31);
     });
 
-    extend(OrderTableGroupFoot.prototype, 'columns', function (items: ItemList) {
+    extend(OrderTableGroupFoot.prototype, 'columns', function (items) {
         items.add('thumbnail', m('th'), 31);
     });
 
-    extend(OrderTableGroupHead.prototype, 'columns', function (items: ItemList) {
+    extend(OrderTableGroupHead.prototype, 'columns', function (items) {
         items.add('thumbnail', m('th'), 31);
     });
 
-    extend(OrderTableRow.prototype, 'columns', function (this: OrderTableRow, items: ItemList) {
+    extend(OrderTableRow.prototype, 'columns', function (items) {
         const product = this.attrs.line.product();
 
         items.add('thumbnail', m('td', m(Link, {

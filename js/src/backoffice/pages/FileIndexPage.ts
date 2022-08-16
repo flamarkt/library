@@ -2,17 +2,15 @@ import Page from 'flarum/common/components/Page';
 import FileListState from '../states/FileListState';
 import FileList from '../components/FileList';
 
-/* global m */
-
 export default class FileIndexPage extends Page {
-    state!: FileListState;
+    listState!: FileListState;
     uploading: boolean = false;
 
     oninit(vnode) {
         super.oninit(vnode);
 
-        this.state = new FileListState();
-        this.state.refresh();
+        this.listState = new FileListState();
+        this.listState.refresh();
     }
 
     view() {
@@ -34,7 +32,7 @@ export default class FileIndexPage extends Page {
                         body,
                     }).then(result => {
                         this.uploading = false;
-                        this.state.add(app.store.pushPayload(result));
+                        this.listState.add(app.store.pushPayload(result));
                         m.redraw();
                     }).catch(err => {
                         this.uploading = false;
@@ -44,7 +42,7 @@ export default class FileIndexPage extends Page {
                 }
             }),
             m(FileList, {
-                state: this.state,
+                state: this.listState,
             }),
         ]));
     }

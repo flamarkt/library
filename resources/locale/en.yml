@@ -12,6 +12,9 @@ flamarkt-library:
             field:
                 title: Title
                 description: Description
+        select:
+            title: Select a file
+
     forum:
         settings:
             submit: Save

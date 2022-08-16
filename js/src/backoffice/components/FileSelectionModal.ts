@@ -1,23 +1,34 @@
-import Modal from 'flarum/common/components/Modal';
+import Modal, {IInternalModalAttrs} from 'flarum/common/components/Modal';
 import FileListState from '../states/FileListState';
 import FileSelectList from './FileSelectList';
+import File from '../../common/models/File';
 
-export default class FileSelectionModal extends Modal {
-    oninit(vnode) {
+interface FileSelectionModalAttrs extends IInternalModalAttrs {
+    onselect: (file: File) => void
+}
+
+export default class FileSelectionModal extends Modal<FileSelectionModalAttrs> {
+    listState!: FileListState
+
+    oninit(vnode: any) {
         super.oninit(vnode);
 
-        this.state = new FileListState();
-        this.state.refresh();
+        this.listState = new FileListState();
+        this.listState.refresh();
+    }
+
+    className() {
+        return 'FlamarktLibrarySelectionModal';
     }
 
     title() {
-        return 'Select a file';
+        return app.translator.trans('flamarkt-library.backoffice.select.title');
     }
 
     content() {
         return m('.Modal-body', m(FileSelectList, {
-            state: this.state,
-            onselect: file => {
+            state: this.listState,
+            onselect: (file: File) => {
                 this.attrs.onselect(file);
                 this.hide();
             },
