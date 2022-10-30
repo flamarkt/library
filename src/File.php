@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Flamarkt\Core\Product\Product;
 use Flarum\Database\AbstractModel;
 use Flarum\Database\ScopeVisibilityTrait;
+use Flarum\Foundation\EventGeneratorTrait;
 use Flarum\User\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations;
@@ -31,7 +32,7 @@ use Illuminate\Database\Eloquent\Relations;
  */
 class File extends AbstractModel
 {
-    use ScopeVisibilityTrait;
+    use EventGeneratorTrait, ScopeVisibilityTrait;
 
     protected $table = 'flamarkt_files';
 

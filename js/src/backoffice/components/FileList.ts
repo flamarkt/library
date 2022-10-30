@@ -1,6 +1,6 @@
+import app from 'flamarkt/backoffice/backoffice/app';
 import AbstractList from 'flamarkt/backoffice/backoffice/components/AbstractList';
 import LinkButton from 'flarum/common/components/LinkButton';
-import Button from 'flarum/common/components/Button';
 import File from '../../common/models/File';
 
 export default class FileList extends AbstractList<File> {
@@ -34,11 +34,6 @@ export default class FileList extends AbstractList<File> {
             href: app.route('files.show', {
                 id: file.id(),
             }),
-        }));
-
-        actions.add('hide', Button.component({
-            className: 'Button Button--icon',
-            icon: 'fas fa-times',
         }));
 
         return actions;

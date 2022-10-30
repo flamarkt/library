@@ -1,3 +1,4 @@
+import app from 'flamarkt/backoffice/backoffice/app';
 import AbstractShowPage from 'flamarkt/backoffice/common/pages/AbstractShowPage';
 import SubmitButton from 'flamarkt/backoffice/backoffice/components/SubmitButton';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
@@ -36,8 +37,8 @@ export default class FileShowPage extends AbstractShowPage {
                 m('input.FormControl', {
                     type: 'text',
                     value: this.title,
-                    oninput: event => {
-                        this.title = event.target.value;
+                    oninput: (event: InputEvent) => {
+                        this.title = (event.target as HTMLInputElement).value;
                         this.dirty = true;
                     },
                 }),
@@ -46,8 +47,8 @@ export default class FileShowPage extends AbstractShowPage {
                 m('label', app.translator.trans('flamarkt-library.backoffice.files.field.description')),
                 m('textarea.FormControl', {
                     value: this.description,
-                    oninput: event => {
-                        this.description = event.target.value;
+                    oninput: (event: InputEvent) => {
+                        this.description = (event.target as HTMLInputElement).value;
                         this.dirty = true;
                     },
                 }),

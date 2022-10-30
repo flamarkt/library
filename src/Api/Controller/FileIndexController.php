@@ -4,6 +4,7 @@ namespace Flamarkt\Library\Api\Controller;
 
 use Flamarkt\Library\Api\Serializer\FileSerializer;
 use Flamarkt\Library\FileFilterer;
+use Flamarkt\Library\FileSearcher;
 use Flarum\Api\Controller\AbstractListController;
 use Flarum\Http\RequestUtil;
 use Flarum\Http\UrlGenerator;
@@ -23,12 +24,16 @@ class FileIndexController extends AbstractListController
         'createdAt' => 'desc',
     ];
 
+    public $limit = 24;
+
     protected $filterer;
+    protected $searcher;
     protected $url;
 
-    public function __construct(FileFilterer $filterer, UrlGenerator $url)
+    public function __construct(FileFilterer $filterer, FileSearcher $searcher, UrlGenerator $url)
     {
         $this->filterer = $filterer;
+        $this->searcher = $searcher;
         $this->url = $url;
     }
 
@@ -43,7 +48,11 @@ class FileIndexController extends AbstractListController
         $include = $this->extractInclude($request);
 
         $criteria = new QueryCriteria($actor, $filters, $sort);
-        $results = $this->filterer->filter($criteria, $limit, $offset);
+        if (array_key_exists('q', $filters)) {
+            $results = $this->searcher->search($criteria, $limit, $offset);
+        } else {
+            $results = $this->filterer->filter($criteria, $limit, $offset);
+        }
 
         $document->addPaginationLinks(
             $this->url->to('api')->route('flamarkt.files.index'),

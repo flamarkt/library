@@ -3,16 +3,15 @@
 namespace Flamarkt\Library;
 
 use ClarkWinkelmann\Mithril2Html\Extend\FrontendNoConflict;
+use ClarkWinkelmann\Scout\Extend\Scout;
 use Flamarkt\Core\Api\Controller as CoreController;
 use Flamarkt\Core\Api\Serializer\BasicProductSerializer;
 use Flamarkt\Core\Api\Serializer\ProductSerializer;
 use Flamarkt\Core\Product\Event\Saving;
 use Flamarkt\Core\Product\Product;
-use Flamarkt\Core\Product\ProductFilterer;
-use Flamarkt\Core\Product\ProductSearcher;
 use Flarum\Extend;
 
-return [
+$extenders = [
     (new Extend\Frontend('backoffice'))
         ->js(__DIR__ . '/js/dist/backoffice.js')
         ->route('/files', 'files.index')
@@ -59,10 +58,11 @@ return [
     (new Extend\ApiController(CoreController\OrderShowController::class))
         ->addInclude('lines.product.thumbnail'),
 
-    /*(new Extend\Filter(ProductFilterer::class))
-        ->addFilter(Gambit\ProductCategoryGambit::class),
-    (new Extend\SimpleFlarumSearch(ProductSearcher::class))
-        ->addGambit(Gambit\ProductCategoryGambit::class),*/
+    (new Extend\Filter(FileFilterer::class))
+        ->addFilter(Filter\MimeFilter::class),
+    (new Extend\SimpleFlarumSearch(FileSearcher::class))
+        ->addGambit(Filter\MimeFilter::class)
+        ->setFullTextGambit(Filter\FullTextGambit::class),
 
     (new Extend\ServiceProvider())
         ->register(ImageServiceProvider::class),
@@ -76,3 +76,27 @@ return [
     (new Extend\Filter(FileFilterer::class))
         ->addFilter(Filter\MimeFilter::class),
 ];
+
+if (class_exists(Scout::class)) {
+    $extenders[] = (new Scout(File::class))
+        ->listenSaved(File\Event\Created::class, function (File\Event\Created $event) {
+            return $event->file;
+        })
+        ->listenSaved(File\Event\DescriptionChanged::class, function (File\Event\DescriptionChanged $event) {
+            return $event->file;
+        })
+        ->listenSaved(File\Event\TitleChanged::class, function (File\Event\TitleChanged $event) {
+            return $event->file;
+        })
+        ->listenDeleted(File\Event\Deleted::class, function (File\Event\Deleted $event) {
+            return $event->file;
+        })
+        ->attributes(function (File $file): array {
+            return [
+                'title' => $file->title,
+                'description' => $file->description,
+            ];
+        });
+}
+
+return $extenders;

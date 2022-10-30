@@ -6,6 +6,7 @@ flamarkt-library:
             head:
                 thumbnail: Thumbnail
         files:
+            searchPlaceholder: Search files...
             head:
                 thumbnail: Thumbnail
                 title: Title

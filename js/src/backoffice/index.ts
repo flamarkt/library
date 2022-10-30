@@ -1,3 +1,4 @@
+import app from 'flamarkt/backoffice/backoffice/app';
 import File from '../common/models/File';
 import BackofficeNav from 'flamarkt/backoffice/backoffice/components/BackofficeNav';
 import ActiveLinkButton from 'flamarkt/backoffice/common/components/ActiveLinkButton';
@@ -77,7 +78,7 @@ app.initializers.add('flamarkt-library', () => {
                 icon: 'fas fa-file',
                 onclick: () => {
                     app.modal.show(FileSelectionModal, {
-                        onselect: file => {
+                        onselect: (file: File) => {
                             this.thumbnail = file;
                             this.dirty = true;
                         },
@@ -87,7 +88,7 @@ app.initializers.add('flamarkt-library', () => {
         ]));
     });
 
-    extend(ProductShowPage.prototype, 'data', function (data) {
+    extend(ProductShowPage.prototype, 'data', function (data: any) {
         data.relationships = data.relationships || {};
         data.relationships.thumbnail = this.thumbnail;
     });

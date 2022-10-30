@@ -40,7 +40,10 @@
                 "name": "fas fa-file",
                 "backgroundColor": "#266a13",
                 "color": "#fff"
-            }
+            },
+            "optional-dependencies": [
+                "clarkwinkelmann/flarum-ext-scout"
+            ]
         },
         "flamarkt-backoffice": {
             "showInBackoffice": true,

@@ -6,3 +6,9 @@ declare module 'flamarkt/core/backoffice/pages/ProductShowPage' {
         thumbnail: File | null
     }
 }
+
+declare module 'flamarkt/core/common/models/Product' {
+    export default interface Product {
+        thumbnail: () => File | false
+    }
+}

@@ -2,8 +2,12 @@
 
 namespace Flamarkt\Library;
 
+use Flamarkt\Library\File\Event\Created;
+use Flamarkt\Library\File\Event\Saving;
+use Flarum\Foundation\DispatchEventsTrait;
 use Flarum\Foundation\Paths;
 use Flarum\User\User;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Queue\Queue;
 use Intervention\Image\ImageManager;
 use League\Flysystem\FilesystemInterface;
@@ -13,15 +17,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileRepository
 {
+    use DispatchEventsTrait;
+
     protected $paths;
     protected $assets;
     protected $queue;
 
-    public function __construct(Paths $paths, FilesystemInterface $assets, Queue $queue)
+    public function __construct(Paths $paths, FilesystemInterface $assets, Queue $queue, Dispatcher $events)
     {
         $this->paths = $paths;
         $this->assets = $assets;
         $this->queue = $queue;
+        $this->events = $events;
     }
 
     public function store(UploadedFileInterface $uploadedFile, User $actor)
@@ -53,7 +60,14 @@ class FileRepository
 
             $this->assets->write($file->uid . '/' . $file->filename, file_get_contents($tmpFile));
 
+            // TODO: pass data to event
+            $this->events->dispatch(new Saving($file, $actor, []));
+
             $file->save();
+
+            $this->dispatchEventsFor($file, $actor);
+
+            $this->events->dispatch(new Created($file, $actor));
 
             $this->queue->push(new CreateConversions($file));
 
