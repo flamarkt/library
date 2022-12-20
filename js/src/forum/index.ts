@@ -56,10 +56,10 @@ app.initializers.add('flamarkt-library', () => {
     extend(OrderTableRow.prototype, 'columns', function (items) {
         const product = this.attrs.line.product();
 
-        items.add('thumbnail', m('td', m(Link, {
+        items.add('thumbnail', m('td', product ? m(Link, {
             href: app.route.product(product),
         }, Image.component({
             file: product ? product.thumbnail() : null,
-        }))), 31);
+        })) : null), 31);
     });
 });
