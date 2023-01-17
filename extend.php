@@ -8,7 +8,7 @@ use Flamarkt\Core\Api\Controller as CoreController;
 use Flamarkt\Core\Api\Serializer\BasicProductSerializer;
 use Flamarkt\Core\Api\Serializer\ProductSerializer;
 use Flamarkt\Core\Extend\Mail;
-use Flamarkt\Core\Notification\OrderReceivedBlueprint;
+use Flamarkt\Core\Notification\AbstractOrderUpdateBlueprint;
 use Flamarkt\Core\Product\Event\Saving;
 use Flamarkt\Core\Product\Product;
 use Flarum\Extend;
@@ -80,7 +80,7 @@ $extenders = [
 
     (new Mail())
         ->css(function ($blueprint) {
-            if ($blueprint instanceof OrderReceivedBlueprint) {
+            if ($blueprint instanceof AbstractOrderUpdateBlueprint) {
                 return <<<CSS
 .FlamarktThumbnail {
     width: 75px;
